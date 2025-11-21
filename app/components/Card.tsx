@@ -1,12 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
+import { CartContext } from "../utiles/ContextReducer";
 type FoodDataType = {
+  id: string;
   name: string;
   category: string;
   description?: string;
-  image?: string;
-  price: { [key: string]: number }; // 👈 this line fixes your error
+  img?: string;
+  price: { [key: string]: string };
 };
 
 type CardProps = {
@@ -16,6 +18,11 @@ type CardProps = {
 const Card = ({ foodData }: CardProps) => {
   // const priceOption = ["regular", "medium", "large"];
   const data = foodData;
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("Card must be used within CartProvider");
+  }
+  const { state, dispatch } = context;
   const priceOption = data.price ? Object.keys(data.price) : [];
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState(priceOption[0]);
@@ -25,10 +32,22 @@ const Card = ({ foodData }: CardProps) => {
   const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSize(e.target.value);
   };
+  
+  let finalPrice = qty * parseInt(data.price[size]);
+  
   const handleAddToCart = () => {
-    
+      dispatch({
+        type:"ADD",
+        id:data.id,
+        name:data.name,
+        price:finalPrice,
+        qty:qty,
+        priceOption:size,
+        img:data.img
+
+      })
+      console.log(state)
   };
-  let finalPrice = qty * data.price[size];
   return (
     <div className="box">
       <div className="w-80 rounded-lg bg-black  border-gradient overflow-hidden text-white border-white">
