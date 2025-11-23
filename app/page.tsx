@@ -2,7 +2,7 @@
 import CarouselComponent from "./components/CarouselComponent";
 import Card from "./components/Card";
 import cardData from "./store/cardData.json";
-
+import React ,{useState} from "react";
 export default function Home() {
   // console.log(cardData);
   let categories = new Set<string>();

@@ -1,7 +1,12 @@
-import React from "react";
+"use client";
+import { useContext } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
+import { CartContext } from "../utiles/ContextReducer";
 const Header = () => {
+  const context = useContext(CartContext)
+  const state = context?.state || []
   return (
     <div>
       <header className="text-white-100 sticky top-0 z-50 bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 body-font">
@@ -34,7 +39,7 @@ const Header = () => {
                 />
               </svg>
               <span className="inline-flex items-center bg-red-50 py-1 px-2 rounded-full text-xs font-medium text-red-600 ring-1 shadow-[0_0_15px_1px_rgba(220,38,38)]  ring-inset ring-red-600/10">
-                0
+                {state.length}
               </span>
             </Link>
             <Link
