@@ -32,21 +32,35 @@ const Card = ({ foodData }: CardProps) => {
   const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSize(e.target.value);
   };
-  
-  let finalPrice = qty * parseInt(data.price[size]);
-  
-  const handleAddToCart = () => {
-      dispatch({
-        type:"ADD",
-        id:data.id,
-        name:data.name,
-        price:finalPrice,
-        qty:qty,
-        priceOption:size,
-        img:data.img
 
-      })
-      console.log(state)
+  let finalPrice = qty * parseInt(data.price[size]);
+
+  const handleAddToCart = async () => {
+    const updateItem = await state.find(
+      (item) => item.tempId === data.id + size
+    );
+
+    if (!updateItem) {
+      dispatch({
+        type: "ADD",
+        id: data.id,
+        tempId: data.id + size,
+        name: data.name,
+        price: finalPrice,
+        qty: qty,
+        priceOption: size,
+        img: data.img,
+      });
+      if (updateItem) {
+        dispatch({
+          type: "UPDATE",
+          id: data.id,
+          tempId: data.id + size,
+          qty: qty,
+        });
+      }
+    }
+    console.log(state);
   };
   return (
     <div className="box">
