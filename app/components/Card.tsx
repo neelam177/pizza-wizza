@@ -40,7 +40,15 @@ const Card = ({ foodData }: CardProps) => {
       (item) => item.tempId === data.id + size
     );
 
-    if (!updateItem) {
+    if (updateItem) {
+      dispatch({
+        type: "UPDATE",
+        id: data.id,
+        tempId: data.id + size,
+        price: finalPrice,
+        qty: qty,
+      });
+    } else {
       dispatch({
         type: "ADD",
         id: data.id,
@@ -51,14 +59,6 @@ const Card = ({ foodData }: CardProps) => {
         priceOption: size,
         img: data.img,
       });
-      if (updateItem) {
-        dispatch({
-          type: "UPDATE",
-          id: data.id,
-          tempId: data.id + size,
-          qty: qty,
-        });
-      }
     }
     console.log(state);
   };
@@ -100,13 +100,12 @@ const Card = ({ foodData }: CardProps) => {
             })}
           </select>
           <select
-            className="p-1 hover:font-bold font-semibold cursor-pointer dark:text-gray-300  border  border-gray-400 dark:border-gray-400 rounded
-          "
+            className="p-1 hover:font-bold font-semibold cursor-pointer dark:text-gray-300  border  border-gray-400 dark:border-gray-400 rounded"
             onChange={handleSize}
           >
             {priceOption.map((options) => {
               return (
-                <option className="" value={options}>
+                <option className="" value={options} key={options}>
                   {options}
                 </option>
               );

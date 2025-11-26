@@ -35,7 +35,48 @@ const reducer = (state: any[], action: any) => {
             price: action.price + food.price,
           };
         }
+        return null;
       });
+      return arr;
+
+    case "REMOVE":
+      let newArr = [...state];
+      newArr.splice(action.index, 1);
+      return newArr;
+
+    case "INCREMENT":
+      let incArr = [...state];
+      incArr.find((food, index) => {
+        if (food.tempId === action.tempId) {
+          incArr[index] = {
+            ...food,
+            qty: food.qty + 1,
+            price: food.price + action.unitPrice,
+          };
+        }
+        return null;
+      });
+      return incArr;
+
+    case "DECREMENT":
+      let decArr = [...state];
+      decArr.find((food, index) => {
+        if (food.tempId === action.tempId) {
+          decArr[index] = {
+            ...food,
+            qty: food.qty - 1,
+            price: food.price - action.unitPrice,
+          };
+        }
+        return null;
+      });
+      return decArr;
+
+    case "DROP":
+      let dropArr:any = []
+      return dropArr;
+
+
     default:
       return state;
   }

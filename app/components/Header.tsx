@@ -9,7 +9,7 @@ const Header = () => {
   const state = context?.state || []
   return (
     <div>
-      <header className="text-white-100 sticky top-0 z-50 bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 body-font">
+      <header className="text-white-100 fixed top-0 z-50 bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 body-font w-full">
         <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
           <Link
             href={"/"}
