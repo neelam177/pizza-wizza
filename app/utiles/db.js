@@ -2,7 +2,9 @@ import mongoose from "mongoose";
 
 const mongoURL = process.env.DB_URL;
 
-const connection = {};
+const connection = {
+    isConnected: null,
+};
 
 async function connect() {
     if (connection.isConnected) {
@@ -18,11 +20,8 @@ async function connect() {
         await mongoose.disconnect();
     }
     const db = await mongoose.connect(mongoURL, {
-        useNewUrlParser: true,
-        useUnifieldtopology: true,
         connectTimeoutMS: 30000,  //30 seconds
         socketTimeoutMS: 30000,  // 30 seconds
-
     });
 
     console.log("new connections");

@@ -68,7 +68,7 @@ const Card = ({ foodData }: CardProps) => {
         <div className="relative w-full h-80">
           <Image
             src="https://www.dominos.co.in/files/items/Farmhouse.jpg"
-            alt=""
+            alt="Pizaa"
             fill
             className="object-cover"
           />
